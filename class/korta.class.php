@@ -29,19 +29,19 @@ class korta {
                           1
                         );
  
-               add_submenu_page($this->slug, 'Formularios',  'Configuración',  'manage_options', 'config', [$this, 'config']);
-               add_submenu_page($this->slug, 'Solicitudes',  'Home',  'manage_options', 'Home', [$this, 'home']);
+               add_submenu_page($this->slug, 'Formularios',  'Formularios',  'manage_options', 'kortaForms', [$this, 'Forms']);
+               add_submenu_page($this->slug, 'Solicitudes',  'Solicitudes',  'manage_options', 'kortaRequests', [$this, 'Requests']);
                // add_submenu_page($this->slug, 'Editor',  'Editor',  'manage_options', 'editor', [$this, 'editor']);
             
 
         }
 
-        public function config() {
-            return get_template_admin('pages/config.php');
+        public function Forms() {
+            return get_template_admin('pages/form.php');
         }
 
-        public function home() {
-            return get_template_admin('pages/home.php');
+        public function Requests() {
+            return get_template_admin('pages/requests.php');
         }
 
         public function editor(){

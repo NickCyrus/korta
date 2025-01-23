@@ -3,7 +3,7 @@
  }
 
  .component-item{
-    font-size: 18px;
+    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
  }
@@ -15,4 +15,18 @@
  
  .component-item i{
         font-size: 24px;
+ }
+
+ button{
+   cursor: pointer;
+ }
+
+ a.nc-btn{
+   text-decoration: none;
+   display: flex;
+   align-items: center;
+ }
+
+ a.nc-btn:hover{
+   color: inherit !important ;
  }

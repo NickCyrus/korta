@@ -19,6 +19,7 @@
  
 global $wpdb;
 global $nc_tbl;
+global $tables;
 
 defined( 'ABSPATH' ) || exit;
  
@@ -33,6 +34,23 @@ if ( ! defined( 'PATH_PLUGIN_PUBLIC_URL' ) )  define( 'PATH_PLUGIN_PUBLIC_URL', 
 include_once PATH_PLUGIN . '/variables.php';
 include_once PATH_PLUGIN . '/includes/functions.php';
 include_once PATH_PLUGIN . '/class/korta.class.php';
+
+register_activation_hook(__FILE__, 'korta_install');
+
+function korta_install() {
+
+    global $wpdb;
+    global $tables;
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+
+	if (count($tables)){
+			foreach($tables as $table){
+				dbDelta($table);
+			}
+	}
+    
+}
 
 
 function korta(){

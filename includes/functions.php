@@ -411,3 +411,10 @@ if (!function_exists('getLink')){
         return site_url('dashboard');
     }
 }
+
+if (!function_exists('_link')){
+    function _link($add='') {
+        return (!$add) ? "?page=".$_REQUEST["page"] : "?page=".$_REQUEST["page"]."&{$add}";
+    }
+}
+
