@@ -14,6 +14,7 @@
  *
  * https://fontello.com/  Fuentes Iconos Free 
  * https://freeicons.io/ 
+ * https://icons.getbootstrap.com/
 */
  
 global $wpdb;

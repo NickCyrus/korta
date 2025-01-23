@@ -92,11 +92,12 @@ class korta {
 
 		public function registerCssAndJsAdmin(){
                      
-                    $url_plugins =  PATH_PLUGIN_ADMIN_URL;
+                    $url_plugins =  PATH_PLUGIN_URL;
 
 					$css = ['https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css',
-                            //"{$url_plugins}asset/icon/css/nc.css",
-                            "{$url_plugins}assets/css/style.css"
+                            "{$url_plugins}bootstrap-icons/font/bootstrap-icons.min.css",
+                            "{$url_plugins}/admin/assets/css/bootstrap.css",
+                            "{$url_plugins}admin/assets/css/style.css"
 						   ];
 
 					foreach ($css as $item) {
@@ -108,15 +109,16 @@ class korta {
                     
 					$js = [ 'https://code.jquery.com/ui/1.14.1/jquery-ui.js',
                             'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
-                         	"{$url_plugins}assets/js/KORTA.js",
+                         	"{$url_plugins}admin/assets/js/korta.js",
 							 
 						   ];
-
+                    /*      
 					foreach ($jsHead as $item) {
 						$ver  = rand();
 						// wp_enqueue_script( $this->slug.str_replace('.','-',basename($item)), $item, 'jQuery', $ver );
 					}
-					 
+					*/
+
 					foreach ($js as $item) {
 						$ver  = rand();
 						wp_enqueue_script( $this->slug.str_replace('.','-',basename($item)), $item, 'jQuery', $ver  , true );

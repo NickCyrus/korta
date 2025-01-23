@@ -1,27 +1,18 @@
-.box-content-tax-cat-res{
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px 0px;
-}
+ .update-nag{
+    display:none !important;
+ }
 
-.box-tax-car-res{
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden; 
-    border: 1px solid #e1d6d6;
-    cursor:move;
-}
+ .component-item{
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+ }
 
-.box-tax-car-res div.title{
-    background: #FFF;
-    padding: 10px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.box-tax-car-res.active{
-   border: 2px solid green; 
-}
+ .component-item:hover{
+    background-color: var(--primary);
+    color:#FFF;
+ }
+ 
+ .component-item i{
+        font-size: 24px;
+ }
