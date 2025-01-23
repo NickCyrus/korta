@@ -1,11 +1,6 @@
 var $= jQuery;
 
-$(document).ready(function(){
-    
-    
-        if ( $('#box-content-tax-cat-res').length){
-                
-                $('#box-content-tax-cat-res').sortable();
-        }
-    
-})
+$(document).on('click','.create-component',function(){
+   var TypeElement = $(this).data('type');
+   console.log(TypeElement)
+});    

@@ -16,7 +16,7 @@
             </div>
             
             <div class="box-actions nc-col nc-p-3"> 
-                <button type="submit" class="nc-btn nc-btn-primary nc-w-100 nc-mt-2 ">
+                <button type="submit" class="nc-btn nc-btn-primary nc-w-100 nc-my-2">
                     <i class="bi bi-floppy nc-mr-1"></i> Guardar</button>
                 <div>
                     <?php get_template_admin('components/list.php'); ?>
