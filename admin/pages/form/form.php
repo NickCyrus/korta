@@ -1,5 +1,4 @@
 <?php
-
     if (isset($form)){
         $json =  json_decode($form->json);
     }
@@ -26,7 +25,11 @@
                                         $components = get_korta_form_fields($form->id);
                                         if ($components){
                                                 foreach($components as $component){
-                                                        pre($component);
+                                                    $component->uniqId      = uniqId();
+                                                    $component->TypeElement = $component->type;
+                                                    echo '<li>';
+                                                        get_template_admin("components/{$component->type}/form.php", (array)$component);
+                                                    echo '<li>';
                                                 }
                                         }
                                       }
@@ -78,6 +81,8 @@
             quicktags: {buttons: 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close'},
             mediaButtons: true,
         });
+
+        $('#form-element-korta #form-element-korta-ul').sortable();
 
     })
 </script>
