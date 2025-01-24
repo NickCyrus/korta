@@ -109,8 +109,8 @@ if (!function_exists('wp_tbl_insert_or_update')){
 }
 if (!function_exists('get_post_info')){
         function get_post_info($field = 'ID'){
-        global $post; 
-        return $post->$field;  
+            global $post; 
+            return $post->$field;  
         }
 }
 if (!function_exists('formatear_fecha')){
@@ -416,5 +416,98 @@ if (!function_exists('_link')){
     function _link($add='') {
         return (!$add) ? "?page=".$_REQUEST["page"] : "?page=".$_REQUEST["page"]."&{$add}";
     }
+}
+
+
+if (!function_exists('remove_quotes')){
+    function remove_quotes(&$array) {
+            foreach($array as $key=>$value){
+                $key  = str_replace("'",'',$key);
+                $newArray[$key] = $value;
+            }
+
+            $array = $newArray;
+    }
+}
+
+if (!function_exists('exit_table')){
+    function exit_table($name){
+        $dbname = DB_NAME;
+        $result  = wp_tbl_row("SELECT COUNT(1) as existe FROM information_schema.tables WHERE table_schema='{$dbname}' AND table_name='{$name}'");
+        return ($result->existe) ? true : false;
+    }
+}
+
+if (!function_exists('check_field_table_form')){
+    function check_field_table_form($name){
+        $result    = wp_tbl_select("DESCRIBE `{$name}`");
+        $listField = [];
+        if ($result){
+                foreach($result as $field){
+                   $listField[] = $field->Field;
+                }
+        }
+        return $listField;
+    }
+}
+
+
+if (!function_exists('get_korta_form')){
+    function get_korta_form($form){
+        global $nc_tbl;
+        return wp_tbl_by_id($form , $nc_tbl['form']);
+    }   
+}
+
+if (!function_exists('get_korta_form_fields')){
+    function get_korta_form_fields($form){
+        global $nc_tbl;
+        return wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE formid='{$form}' ORDER BY `orden` ");
+    }   
+}
+
+
+
+
+if (!function_exists('create_table_form')){
+        function create_table_form($form){
+                global $wpdb;
+                global $nc_tbl;
+                $listFields = '';
+                // Si no existe se crea
+                if (!exit_table($form->table_name)){
+                     
+                  foreach(wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE formid='{$form->id}' ORDER BY `orden` ") as $field){
+                        $listFields .= "`fld_{$field->id}` LONGTEXT NULL , ";
+                  }    
+                  
+                  $sql_table  =  "CREATE TABLE `{$form->table_name}` 
+                                (`id` INT NOT NULL AUTO_INCREMENT COMMENT 'Índice' , 
+                                {$listFields} 
+                                `is_deleted` INT(1) NULL DEFAULT '0' , 
+                                PRIMARY KEY (`id`)) ENGINE = InnoDB;";  
+                    $wpdb->query($sql_table);
+                }else{
+                    // Si existe se actualiza
+                    $fieldExist = check_field_table_form($form->table_name);
+                    $listFields = [];
+                    foreach(wp_tbl_select("SELECT CONCAT('fld_',id) as campo FROM `{$nc_tbl['formdetails']}` WHERE formid='{$form->id}' ORDER BY `orden` ") as $field){
+                        $listFields[] =  $field->campo;
+                    }   
+
+                    $array_diff  = array_diff($listFields , $fieldExist);
+
+                    if (count($array_diff)){
+                            $sql = "ALTER TABLE `{$form->table_name}` ";
+                            $add = '';
+                            foreach($array_diff as $newField){
+                                $add .= (!$add) ? "ADD `{$newField}` LONGTEXT NULL " : ", ADD `{$newField}` LONGTEXT NULL";
+                            }
+                            $sql .= $add;
+                            $wpdb->query($sql);
+                    }
+
+                }   
+        }
 }
 

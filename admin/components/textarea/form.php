@@ -8,26 +8,26 @@
     </div>
     <div class="nc-card-body nc-border nc-hide">
 
-            <input type="hidden" name="kortaField['field'][<?php echo $uniqId ?>]['id']" value="" />               
-            <input type="hidden" name="kortaField['field'][<?php echo $uniqId ?>]['type']" value="<?php echo $TypeElement?>" />
+            <input type="hidden" name="kortaField[field][<?php echo $uniqId ?>][id]" value="" />               
+            <input type="hidden" name="kortaField[field][<?php echo $uniqId ?>][type]" value="<?php echo $TypeElement?>" />
 
             <div class="nc-mb-2 nc-row">
                 <label for="inputPassword" class="nc-col-sm-2 nc-col-form-label">Etiqueta *</label>
                 <div class="nc-col">
-                    <input type="text" class="nc-form-control write-title" name="kortaField['field'][<?php echo $uniqId ?>]['label']" value="" required >
+                    <input type="text" class="nc-form-control write-title" name="kortaField[field][<?php echo $uniqId ?>][label]" value="" required >
                 </div>
             </div>
             <div class="nc-mb-2 nc-row">
                 <label for="inputPassword" class="nc-col-sm-2 nc-col-form-label">Placeholder</label>
                 <div class="nc-col">
-                    <input type="text"  class="nc-form-control" name="kortaField['field'][<?php echo $uniqId ?>]['placeholder']" value="" >
+                    <input type="text"  class="nc-form-control" name="kortaField[field][<?php echo $uniqId ?>][placeholder]" value="" >
                 </div>
             </div>
             <div class="nc-mb-2 nc-row">
                 <label for="inputPassword" class="nc-col-sm-2 nc-col-form-label">Obligatorio </label>
                 <div class="nc-col">
-                    <input type="checkbox" class="nc-form-control write-title" 
-                    name="kortaField['field'][<?php echo $uniqId ?>]['required']" value="" > 
+                    <input type="checkbox" class="nc-form-control" 
+                    name="kortaField[field][<?php echo $uniqId ?>][required]" value="" > 
                 </div>
             </div>
     </div>
@@ -35,7 +35,7 @@
 <script>
     function deleteParent<?php echo $uniqId ?>(obj){
         if (confirm('¿Desea eliminar este campo?')){
-            $(obj).parents('.nc-cards').remove();
+            $(obj).parents(''.nc-cards').remove();
         }
     }
 </script>

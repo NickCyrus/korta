@@ -8,13 +8,13 @@
     </div>
     <div class="nc-card-body nc-border nc-hide">
 
-            <input type="hidden" name="kortaField['field'][<?php echo $uniqId ?>]['id']" value="" />               
-            <input type="hidden" name="kortaField['field'][<?php echo $uniqId ?>]['type']" value="<?php echo $TypeElement?>" />
+            <input type="hidden" name="kortaField[field][<?php echo $uniqId ?>][id]" value="" />               
+            <input type="hidden" name="kortaField[field][<?php echo $uniqId ?>][type]" value="<?php echo $TypeElement?>" />
 
             <div class="nc-mb-2 nc-row">
                 <label for="inputPassword" class="nc-col-sm-2 nc-col-form-label">Etiqueta *</label>
                 <div class="nc-col">
-                    <input type="text" class="nc-form-control write-title" name="kortaField['field'][<?php echo $uniqId ?>]['label']" value="" required >
+                    <input type="text" class="nc-form-control write-title" name="kortaField[field][<?php echo $uniqId ?>][label]" value="" required >
                 </div>
             </div>
             <div class="nc-mb-2 nc-row">
@@ -24,7 +24,7 @@
                         <button type="button" class="nc-btn-sm nc-btn-primary nc-mb-1" onclick="add<?php echo $uniqId ?>(this)"> <i class="bi bi-plus-lg nc-mr-3"></i> Nueva opción </button>
                         <li style="list-style:none;" class="nc-m-0 nc-pb-0">
                             <div class="nc-d-flex nc-align-items-center">
-                                    <input type="text" class="nc-form-control" placeholder="Opcion" name="kortaField['field'][<?php echo $uniqId ?>]['options'][]">
+                                    <input type="text" class="nc-form-control" placeholder="Opcion" name="kortaField[field][<?php echo $uniqId ?>][options][]">
                                     <span class="input-group-text nc-text-red nc-pointer nc-p-3" onclick="deleteElement<?php echo $uniqId ?>(this)">
                                          <i class="bi bi-trash3"></i>
                                     </span>
@@ -34,7 +34,7 @@
                             <div class="clone nc-hide">
                                 <li style="list-style:none;" class="nc-m-0 nc-pb-0">
                                     <div class="nc-d-flex nc-align-items-center">
-                                            <input type="text" class="nc-form-control" placeholder="Opcion" name="kortaField['field'][<?php echo $uniqId ?>]['options'][]">
+                                            <input type="text" class="nc-form-control" placeholder="Opcion" name="kortaField[field][<?php echo $uniqId ?>][options][]">
                                             <span class="input-group-text nc-text-red nc-pointer nc-p-3" onclick="deleteElement<?php echo $uniqId ?>(this)">
                                                 <i class="bi bi-trash3"></i>
                                             </span>
@@ -49,8 +49,8 @@
             <div class="nc-mb-2 nc-row">
                 <label for="inputPassword" class="nc-col-sm-2 nc-col-form-label">Obligatorio </label>
                 <div class="nc-col">
-                    <input type="checkbox" class="nc-form-control write-title" 
-                    name="kortaField['field'][<?php echo $uniqId ?>]['required']" value="" > 
+                    <input type="checkbox" class="nc-form-control" 
+                    name="kortaField[field][<?php echo $uniqId ?>][required]" value="" > 
                 </div>
             </div>
     </div>
@@ -64,7 +64,7 @@
 
     function deleteElement<?php echo $uniqId ?>(obj){
         if (confirm('¿Desea eliminar esta opción de seleccion?')){
-            $(obj).parent().parent('li').remove();
+            $(obj).parent().parent(li).remove();
         }
     }
 

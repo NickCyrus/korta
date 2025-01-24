@@ -47,5 +47,31 @@ $(document).ready(function(){
                })
 
       })
+      
+      $(document).on('submit','.nc-form',function(e){
+                
+                  if (!$('#form-element-korta ul li').length){
+                       e.preventDefault();
+                       alert("No has indicado ningún campo para este formulario.")    
+                       return false   
+                  }
+
+                  if (!$('#form-element-korta ul li .nc-cards .has-input-email').length){
+                        e.preventDefault();
+                        alert("No has indicado ningún campo tipo <b>Email</b> para el cliente.")    
+                        return false   
+                   }
+
+      })
+
+
+      $(document).on('click','.confirm-event',function(e){
+            if (!confirm('¿Desea eliminar este registro ?')){
+                        e.preventDefault();
+            }
+      })
+      
+      
+
 
 })
