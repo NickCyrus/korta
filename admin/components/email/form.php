@@ -31,8 +31,7 @@
             <div class="nc-mb-2 nc-row">
                 <label for="inputPassword" class="nc-col-sm-2 nc-col-form-label">Obligatorio </label>
                 <div class="nc-col">
-                    <input type="checkbox" class="nc-form-control" 
-                    name="kortaField[field][<?php echo $uniqId ?>][required]" <?php if (isset($json->required) && $json->required) echo 'checked' ?> value="1" > 
+                    <input type="checkbox" class="nc-form-control" name="kortaField[field][<?php echo $uniqId ?>][required]" <?php if (isset($json->required) && $json->required) echo 'checked' ?> value="1" > 
                 </div>
             </div>
     </div>

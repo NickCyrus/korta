@@ -39,7 +39,7 @@
 <script>
     function deleteParent<?php echo $uniqId ?>(obj){
         if (confirm('¿Desea eliminar este campo?')){
-            $(obj).parents(''.nc-cards').remove();
+            $(obj).parents('.nc-cards').remove();
         }
     }
 </script>
