@@ -105,11 +105,13 @@ class korta {
 						wp_enqueue_style( $this->slug.str_replace('.','-',basename($item)), $item, '', $ver, 'all'  );
 					}
                     
-                    $jsHead = ['https://cdn.tailwindcss.com'];
+                    // $jsHead = ['https://cdn.tailwindcss.com'];
                     
 					$js = [ 'https://code.jquery.com/ui/1.14.1/jquery-ui.js',
                             'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
-                         	"{$url_plugins}admin/assets/js/korta.js",
+                            "{$url_plugins}admin/assets/js/jquery.serializejson.js",
+                         	"{$url_plugins}admin/assets/js/functions.js",
+                            "{$url_plugins}admin/assets/js/korta.js",
 							 
 						   ];
                     /*      
@@ -139,7 +141,8 @@ class korta {
                      wp_localize_script('jquery', 'cm_settings', $cm_settings);
                      wp_enqueue_script('wp-theme-plugin-editor');
                      wp_enqueue_style('wp-codemirror');
-                    
+                     wp_enqueue_media();
+                     wp_enqueue_editor();
 
 			}
             
@@ -149,13 +152,15 @@ class korta {
             public function ajax(){
                 
                 $data  = $_REQUEST;
+                $data['uniqId'] = uniqid();
                 extract($data , EXTR_SKIP);   
     		    
                 
     			switch($opc){
-                    case 'create_account':
+                    case 'component':
+                        $html  = get_template_admin("components/{$TypeElement}/form.php", $data, true);
+                        return wp_send_json(['sucess'=>true, 'html'=>$html]);
                     break;
-                    
     			 
     			}
                 

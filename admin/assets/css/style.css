@@ -30,3 +30,18 @@
  a.nc-btn:hover{
    color: inherit !important ;
  }
+
+ #form-element-korta {
+    padding: 20px;
+ }
+ #form-element-korta ul li{
+    list-style: none;
+ }
+
+ #form-element-korta ul li:active{
+   cursor: n-resize;
+ }
+
+ .nc-card-header .bi{
+    font-size: 20px;
+ }

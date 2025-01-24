@@ -6895,3 +6895,20 @@ a.text-dark:hover, a.text-dark:focus {
 .nc-fw-semibold { font-weight: 600 !important; }
 .nc-fw-light { font-weight: 300 !important; }
 .nc-fw-normal { font-weight: 400 !important; }
+.nc-hide{ display: none; }
+
+.nc-input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  margin-left: calc(var(--bs-border-width)* -1);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.nc-input-group >.form-control , .nc-input-group >.form-floating, .nc-input-group >.form-select {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+
+.nc-text-red { color: red; }
+.nc-pointer{ cursor: pointer;}

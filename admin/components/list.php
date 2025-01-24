@@ -4,7 +4,7 @@
                    ['checkbox','bi-ui-checks','Opción multiple'],
                    ['radio','bi-ui-radios','Opción única'],
                    ['email','bi-at','Campo correo'],
-                   ['file','bi-upload','Campo carga de archivo'],
+                   // ['file','bi-upload','Campo carga de archivo'],
                    ['input-text','bi-input-cursor-text','Campo de texto corto'],
                    ['textarea','bi-card-text','Campo de texto largo'],
                    ['select','bi-justify','Campo tipo selección']

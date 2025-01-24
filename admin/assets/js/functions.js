@@ -1,26 +1,27 @@
 var modal;
+var nc_ajax;
 
 function ajax(options = {}){
   
     var defaul = {
-                     url : ajax_nc.url,
-                     action : ajax_nc.action,
+                     url : ajax_korta.url,
+                     action : ajax_korta.action,
                      type: 'POST',
                      dataType : 'json',
-                     nonce : ajax_nc.nonce,
+                     nonce : ajax_korta.nonce,
                      beforeSend : ()=>{},
                      success : ()=>{},
                      opc : ''
                 }
  
-            var opc = nc.extend( defaul , options );
+            var opc = jQuery.extend( defaul , options );
                          
-            nc_ajax = nc.ajax({
+            nc_ajax = jQuery.ajax({
                          beforeSend :opc.beforeSend,
                          type: opc.type,
                          url: opc.url,
                          dataType: opc.dataType,
-                         data: nc.extend({action : opc.action, 
+                         data: jQuery.extend({action : opc.action, 
                                          nonce : opc.nonce , 
                                          opc : opc.opc
                                },opc ),
@@ -30,7 +31,7 @@ function ajax(options = {}){
 }
  
 function alert(mensaje){
-     nc.alert({
+    jQuery.alert({
          title: '',
          content: mensaje,
          useBootstrap : false

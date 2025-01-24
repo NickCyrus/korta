@@ -4,19 +4,34 @@
             <div class="box-form nc-col-10">
                     <div class="nc-mb-3">
                         <label class="nc-form-label nc-d-block nc-fw-bold">Nombre del formulario</label>
+                        <input type="text" class="nc-form-control" id="title" name="title" required>
+                    </div>
+                    <div class="nc-mb-3">
+                        <label class="nc-form-label nc-d-block nc-fw-bold">Correo de notificación (<i>Administrador</i>)</label>
                         <input type="email" class="nc-form-control" id="title" name="title" required>
                     </div>
                     <fieldset>
                         <legend>Elementos del formulario</legend>
-                        <div class="nc-border">
-
+                        <div class="nc-border" id="form-element-korta">
+                            <ul id="form-element-korta-ul" class="nc-m-0 nc-p-0">
+                                
+                            </ul>
                         </div>        
                     </fieldset>
+                    <div class="nc-my-3">
+                        <label class="nc-form-label nc-d-block nc-fw-bold">Mensaje de respuesta enviado con exito</label>
+                        <textarea class="nc-form-control" name="msg_register_success" id="msg_register_success" rows="7"></textarea>
+                    </div>
+                    <div class="nc-my-3">
+                        <label class="nc-form-label nc-d-block nc-fw-bold">Email automático recepción del formulario (<i>Cliente</i>)</label>
+                        <textarea class="nc-form-control" name="notificacion_customers" id="editor_korta"></textarea>
+                    </div>
+                    
                     
             </div>
             
             <div class="box-actions nc-col nc-p-3"> 
-                <button type="submit" class="nc-btn nc-btn-primary nc-w-100 nc-my-2">
+                <button type="submit" id="btnEventSave" class="nc-btn nc-btn-primary nc-w-100 nc-my-2">
                     <i class="bi bi-floppy nc-mr-1"></i> Guardar</button>
                 <div>
                     <?php get_template_admin('components/list.php'); ?>
@@ -26,3 +41,23 @@
     </form>
 
 </div>
+     
+<script>
+    jQuery(document).ready(function($) {
+       // wp.editor.initialize($('#editor_korta'), true);
+      // var editor = wp.editor.initialize(, cm_settings);
+
+      wp.editor.initialize('editor_korta', {
+            tinymce: {
+            wpautop: true,
+                plugins : 'charmap colorpicker hr lists paste tabfocus textcolor fullscreen wordpress wpautoresize wpeditimage wpemoji wpgallery wplink wptextpattern',
+                toolbar1: 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link,wp_more,spellchecker,wp_adv,listbuttons',
+                toolbar2: 'styleselect,strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help',
+                textarea_rows : 20
+            },
+            quicktags: {buttons: 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close'},
+            mediaButtons: true,
+        });
+
+    })
+</script>
