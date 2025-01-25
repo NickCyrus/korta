@@ -1,5 +1,9 @@
 <?php
 
+use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 if (!function_exists('dia_semana')){
     function dia_semana ($dia, $mes, $ano) {
         $dias = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
@@ -51,13 +55,14 @@ if (!function_exists('uniqidReal')){
             return substr(bin2hex($bytes), 0, $lenght);
         }
 }
-if (!function_exists('wp_tbl_update')){
 
+if (!function_exists('wp_tbl_update')){
         function wp_tbl_update ($id , $table , $args_update=[]){
             global $wpdb;
             $wpdb->update($table,$args_update, array('id'=>$id));   
         }
 }
+
 if (!function_exists('wp_tbl_select')){
         
         function wp_tbl_select($sql){
@@ -84,7 +89,8 @@ if (!function_exists('wp_tbl_insert')){
 
         function wp_tbl_insert($table , $args){
             global $wpdb;
-            return $wpdb->insert($table, $args);
+            $wpdb->insert($table, $args);
+            return $wpdb->insert_id;
         }
 }
 
@@ -469,13 +475,50 @@ if (!function_exists('get_korta_form')){
 }
 
 if (!function_exists('get_korta_form_fields')){
-    function get_korta_form_fields($form){
+    function get_korta_form_fields($form, $type=''){
         global $nc_tbl;
-        return wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE is_deleted=0 AND formid='{$form}' ORDER BY `orden` ");
+        $sql_add = '';
+        if ($type){
+            $sql_add =  "AND type='{$type}' ";
+        }
+        return wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE  is_deleted=0 AND formid='{$form}' {$sql_add} ORDER BY `orden` ");
     }   
 }
 
 
+if (!function_exists('get_korta_form_records')){
+    function get_korta_form_recordBy($args =[]){
+        global $nc_tbl;
+        $sql_add = '';
+        foreach($args as $key=>$value){
+
+        }
+        if ($type){
+            $sql_add =  "AND type='{$type}' ";
+        }
+        return wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE  is_deleted=0 AND formid='{$form}' {$sql_add} ORDER BY `orden` ");
+    }   
+}
+
+
+
+if (!function_exists('get_korta_form_tot_records')){
+    function get_korta_form_tot_records($id){
+        global $nc_tbl;
+        return  wp_tbl_row("SELECT count(*) as total FROM   `{$nc_tbl['formrecord']}` 
+                            WHERE formid='{$id}' AND is_deleted=0 ")->total ?? 0; 
+    }   
+}
+
+
+if (!function_exists('get_korta_form_record')){
+    function get_korta_form_record($id){
+        global $nc_tbl;
+         
+        return  wp_tbl_row("SELECT fr.* , f.table_name , f.name , f.notification_mail FROM `{$nc_tbl['formrecord']}` fr ,  `{$nc_tbl['form']}` f
+                            WHERE f.id = fr.formid AND fr.id='{$id}' AND fr.is_deleted=0 ");
+    }   
+}
 
 
 if (!function_exists('create_table_form')){
@@ -520,3 +563,149 @@ if (!function_exists('create_table_form')){
         }
 }
 
+if (!function_exists('isJson')){
+    function isJson($string) {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+}
+
+if (!function_exists('getInputForm')){
+    function getInputForm($input) {
+        if (!$input) return '';
+        if (is_array($input)) return json_encode($input);
+        return $input;
+    }
+}
+
+
+if (!function_exists('getValueForm')){
+    function getValueForm($input) {
+        if (!$input) return '';
+        if (is_numeric($input)) return stripslashes($input);
+        if (isJson($input)) {
+            return stripslashes( implode(', ', json_decode($input,true) ));
+        }
+        return stripslashes($input);
+    }
+}
+
+if (!function_exists('getNameTbl')){
+    function getNameTbl($tbl) {
+        global $nc_tbl;
+        return $nc_tbl[$tbl];
+    }
+}
+
+
+if (!function_exists('korta_mail')){
+    function korta_mail($email_to, $email_subject, $email_body , $email_header='', $email_attc=[]) {
+        
+        return wp_mail( $email_to, stripslashes($email_subject), stripslashes($email_body), $email_header, $email_attc );
+    }
+}
+
+
+if (!function_exists('korta_mail_replace')){
+    function korta_mail_replace($text, $replace) {
+            foreach($replace as $key=>$value){
+                $text = str_replace("[$key]",$value,$text);
+            }
+            return $text;
+    }
+}
+
+if (!function_exists('get_custom_logo_url')){
+    function get_custom_logo_url()
+    {
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+        return ($image) ? $image[0] : PATH_PLUGIN_URL."korta-logo.svg";
+    }
+}
+
+if (!function_exists('get_custom_logo_path')){
+    function get_custom_logo_path()
+    {
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        $image = wp_get_original_image_path( $custom_logo_id );
+        return ($image) ? $image : PATH_PLUGIN_URL."korta-logo.png";
+    }
+}
+
+if (!function_exists('mekeExcel')){
+function mekeExcel($orders = []){
+    
+    $LETRAS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA'];
+    $CAPS   = ['Expedicion','Order Type','Pedido','Related Order','Duration','Check-in Time','Referencia','Nombre',
+               'Boxes','Time window','Notes','Phone','Location Name','Address','City','Zip Code','Codigo Tipo Servicio','Customer',
+               'Email'];
+     
+     $LETRAS = ['A','B','C','D','E','F','G','H'];              
+     $CAPS   = ['Pedido','Hora de entrega','Notas','Teléfono','Dirección','Ciudad','Código postal','Emai'];
+    
+    ob_clean();
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    
+    $i = 0;
+    foreach($CAPS as $label){
+        $lettrer = $LETRAS[$i];
+        $sheet->setCellValue("{$lettrer}1", utf8_encode($label));
+        $i++;        
+    }
+     
+    if ($rows){
+        $i = 2;
+        foreach($rows as $row){
+            foreach($LETRAS as $lettrer){
+                if ($row[$lettrer]) $sheet->setCellValue("{$lettrer}{$i}", $row[$lettrer]); 
+            }
+         $i++;
+        }
+    }
+    
+    $fecha = $_REQUEST['fentrega'];
+    $fecha_text =  fecha_texto($fecha,'%dt %d de %mt');
+    $writer = new Xlsx($spreadsheet);
+    header('Content-type: application/vnd.ms-excel');
+    // It will be called file.xls
+    header('Content-Disposition: attachment; filename="Domicilios '.$fecha_text.'.xls"');
+
+    $writer->save('php://output');
+    exit();
+    
+}
+
+}
+
+if (!function_exists('makePDF')){
+    
+    function makePDF($namePDF , $html , $output = 'save'){
+           
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();        
+        $options = new \Dompdf\Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf->setOptions($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF to Browser
+        $path = PATH_PLUGIN."/tmp";
+      
+        switch($output){
+                case 'save':
+                    $outputPdf = $dompdf->output();
+                    file_put_contents("{$path}/{$namePDF}", $outputPdf);
+                    return "{$path}/{$namePDF}";
+                break;
+                case 'browse':
+                    $dompdf->stream($namePDF, array("Attachment" => false));    
+                break;        
+            }
+        exit(0);    
+       // */
+    }
+}

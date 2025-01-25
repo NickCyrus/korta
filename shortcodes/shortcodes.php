@@ -37,4 +37,11 @@
 
     }
 
+
+    function korta_set_content_type(){
+        return "text/html";
+    }
+
+    add_filter( 'wp_mail_content_type','korta_set_content_type' );
+    
 ?>

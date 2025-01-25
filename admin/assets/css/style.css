@@ -140,3 +140,18 @@
              animation-timing-function: ease-out;
    }
  }
+
+.cap{ background: #ebebeb; }    
+
+.value{
+      border: 1px solid #ebebeb;  
+}    
+
+.nc-table{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-collapse: collapse;
+}
+
+.nc-table tbody tr:hover{
+   background: #f1eeee;
+}

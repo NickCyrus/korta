@@ -42,9 +42,12 @@
 
 $tables[] = ["CREATE TABLE `{$nc_tbl['formrecord']}`
             (`id` INT NOT NULL AUTO_INCREMENT , 
+             `code` INT NOT NULL , 
              `formid` INT NOT NULL , 
              `recordid` INT NOT NULL , 
+             `user_id` INT NULL , 
              `is_new` INT(1) NULL DEFAULT '1' , 
+             `is_send` INT(1) NULL DEFAULT '0' , 
              `created_at` DATE NULL , 
              `open_at` DATE NULL , 
              `is_deleted` INT NULL , 

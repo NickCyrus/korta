@@ -72,3 +72,7 @@ function wait(msg , boxWidth= '30%'){
 function closeWait(){
     modal.close();
 }
+
+function resetForm(form){
+  jQuery(form).trigger("reset");
+}

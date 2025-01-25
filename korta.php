@@ -35,6 +35,7 @@ include_once PATH_PLUGIN . '/variables.php';
 include_once PATH_PLUGIN . '/includes/functions.php';
 include_once PATH_PLUGIN . '/class/korta.class.php';
 include_once PATH_PLUGIN . '/shortcodes/shortcodes.php';
+include_once PATH_PLUGIN . '/vendor/autoload.php';
 
 register_activation_hook(__FILE__, 'korta_install');
 

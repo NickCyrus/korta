@@ -55,6 +55,10 @@
 
                     </div>
                     <div class="nc-my-3">
+                        <label class="nc-form-label nc-d-block nc-fw-bold">Asunto Email automático</label>
+                        <input type="text" class="nc-form-control" name="mail_subject" id="mail_subject" required value="<?php echo $json->mail_subject ?? '' ?>" />
+                    </div>
+                    <div class="nc-my-3">
                         <label class="nc-form-label nc-d-block nc-fw-bold">Email automático recepción del formulario (<i>Cliente</i>)</label>
                         <textarea class="nc-form-control" name="notification_receipt" id="editor_korta"><?php echo $form->notification_receipt ?? '' ?></textarea>
                     </div>
@@ -81,7 +85,7 @@
 
       wp.editor.initialize('editor_korta', {
             tinymce: {
-            wpautop: true,
+            wpautop: false,
                 plugins : 'charmap colorpicker hr lists paste tabfocus textcolor fullscreen wordpress wpautoresize wpeditimage wpemoji wpgallery wplink wptextpattern',
                 toolbar1: 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link,wp_more,spellchecker,wp_adv,listbuttons',
                 toolbar2: 'styleselect,strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help',

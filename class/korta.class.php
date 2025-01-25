@@ -157,7 +157,11 @@ class korta {
     			switch($opc){
                     case 'component':
                         $html  = get_template_admin("components/{$TypeElement}/form.php", $data, true);
-                        return wp_send_json(['sucess'=>true, 'html'=>$html]);
+                        return wp_send_json(['success'=>true, 'html'=>$html],200);
+                    break;
+                    case 'kortasaveform':
+                        $response = $this->saveFormRecord($data['data']);
+                        return wp_send_json($response,200);
                     break;
     			 
     			}
@@ -166,6 +170,104 @@ class korta {
             }
             
             
-             
+            function saveFormRecord($info){+
+
+                    
+
+                    $formId = getInputForm($info['kortaform']);
+                    $array_exlude = ['kortaform'];
+                    foreach($info as $key=>$row){
+                            if (!in_array($key,$array_exlude)){
+                                $record[$key] = getInputForm($row);
+                            }
+                    }
+                    
+                    $form      = get_korta_form($formId);
+                    $formJson  = json_decode($form->json);
+                    $formField = get_korta_form_fields($formId);
+                    
+                    if ($formField){
+                        foreach($formField as $field_mail){
+                            if ($field_mail->type == 'email'){
+                                if (isset($record["fld_{$field_mail->id}"]) && $record["fld_{$field_mail->id}"]){
+                                    $to[] = $record["fld_{$field_mail->id}"];    
+                                }
+                            }
+                            $info  = json_decode($field_mail->json);
+                            
+                            if (!in_array($field_mail->type, ['accept'])){
+                                $lablesByKey["fld_{$field_mail->id}"] = $info->label;
+                            }
+
+                        }
+
+
+                    }
+                    
+                   
+                    $recordId          =  wp_tbl_insert($form->table_name, $record);
+                    $code              =  "KT-{$recordId}-".rand(99,9999);
+                    $recordIdRel       = wp_tbl_insert(getNameTbl('formrecord'), ['code'=>$code , 'formid'=>$formId, 'recordid'=>$recordId, 'is_new'=>1,'created_at'=>date("Y-m-d"),'is_deleted'=>0]);    
+
+                    $data['message'] = $formJson->msg_register_success;
+                    $data['success'] = true;
+
+                    $record['number-request']      = $code;
+                    
+                    $template     = get_template_admin('mail/template.html',[],true);
+                    
+                    $body_mail = korta_mail_replace($form->notification_receipt,$record);
+                    $body_mail = korta_mail_replace($template,['CONTENT'=>$body_mail,'URL_LOGO'=>get_custom_logo_url()]);
+                    $formJson->mail_subject = korta_mail_replace($formJson->mail_subject,$record);
+
+                    /* Build Pdf */
+                    $templatePdf  = get_template_admin('pdf/template.html',[],true);
+                    
+                    if ($lablesByKey){
+                            $codeNumber  = $lablesByKey['number-request'];
+                            $pdf_content = "<table class='table'>
+                                                <tr>
+                                                    <td class='caption'>CODIGO</td>
+                                                    <td class='value'><b>{$code}</b></td>
+                                                </tr>";
+                            foreach($lablesByKey as $key=>$lablesByKeyItem){
+                                $lablesByKeyItem = strtoupper($lablesByKeyItem);
+                                 $valueInfo  = getValueForm($record[$key]);
+                                $pdf_content .="<tr>
+                                                    <td class='caption'>{$lablesByKeyItem}</td>
+                                                    <td class='value'>{$valueInfo}</td>
+                                                </tr>";
+                            }
+                    }
+
+                    $pdf_content  .= "</table>";
+                    
+                    $templatePdf  = korta_mail_replace($templatePdf,['CONTENT'=>$pdf_content,'URL_LOGO'=>get_custom_logo_path()]);
+                   
+                    $attc =  makePDF("{$code}.pdf",$templatePdf);
+
+                    if (isset($to) && $to){
+                          $send = korta_mail($to ,  $formJson->mail_subject ?? 'Korta' , $body_mail, '' , [$attc]) ;
+                          wp_tbl_update($recordIdRel, getNameTbl('formrecord'), ['is_send'=>$send]);
+                          
+                    }
+                    
+                    if ($form->notification_mail){
+                        $subjecAdmin     = "Se ha registrado una nueva solicitud {$code}";
+                        $body_mail_admin = korta_mail_replace($template,['CONTENT'=>$pdf_content,'URL_LOGO'=>get_custom_logo_url()]);
+                        korta_mail($form->notification_mail ,  $subjecAdmin , $body_mail_admin, '' , [$attc]) ;
+                    }  
+                    
+                    @unlink($attc);
+
+                    /*
+                        pre($form);
+                        pre($to);
+                        pre($record);
+                    */
+
+                    return $data;
+
+            } 
 
    }

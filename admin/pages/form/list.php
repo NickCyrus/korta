@@ -19,10 +19,10 @@
                 $listForm = wp_tbl_select("SELECT * FROM `{$nc_tbl['form']}` WHERE is_deleted = 0 ORDER BY id DESC ");
                 foreach($listForm as $form){ ?>
                     <tr>
-                        <td class="nc-p-1"><code>[kortaform id=<?php echo $form->id; ?>]</td>
+                        <td class="nc-p-1"><code>[kortaform id=<?php echo $form->id; ?>]</code></td>
                         <td class="nc-p-1"><?php echo $form->name; ?></td>
                         <td class="nc-p-1"><?php echo $form->notification_mail?></td>
-                        <td align="center" class="nc-p-1">0</td>
+                        <td align="center" class="nc-p-1"><?php echo get_korta_form_tot_records($form->id) ?></td>
                         <td class="nc-p-1">
                             <div class="nc-d-flex nc-gap-3 nc-justify-content-end">
                                 <a class="confirm-event btn-a-icon" href="<?php echo _link('action=delete&id='.$form->id) ?>" title="Eliminar" ><i class="nc-text-red bi bi-trash"></i></a> | 
