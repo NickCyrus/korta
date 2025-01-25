@@ -93,7 +93,7 @@
             </thead>
             <tbody>
                 <?php
-                    $sql      = "SELECT * FROM {$nc_tbl['formresponse']} WHERE formid='{$form->formid}' AND recordid = '{$form->recordid}' ORDER BY resposedate";
+                    $sql      = "SELECT * FROM {$nc_tbl['formresponse']} WHERE formid='{$form->formid}' AND recordid = '{$form->recordid}' ORDER BY resposedate DESC";
                     $comments = wp_tbl_select($sql); 
                     if ($comments){
                         foreach($comments as $comment){
