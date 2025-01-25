@@ -2,6 +2,11 @@
     global $wpdb;
     global $nc_tbl;
    
+    
+    if (isset($_REQUEST["action"]) && $_REQUEST["action"]=='delete' ){
+        $id = $_REQUEST["id"];
+        wp_query("UPDATE {$nc_tbl['form']} SET is_deleted=1 WHERE id={$id}");
+    }
 
     if (isset($_REQUEST["EventSaveForm"])){
         
@@ -19,7 +24,11 @@
 
         $id = wp_tbl_insert_or_update($_REQUEST['id'] , $nc_tbl['form'] , $args);
         
+         
         if (isset($_REQUEST['kortaField']["field"])){
+                
+                wp_query("UPDATE {$nc_tbl['formdetails']} SET is_deleted=1 WHERE formid={$id}");
+
                 foreach($_REQUEST['kortaField'] as $fields){
                         $i = 1;
                         foreach($fields as $field){
@@ -27,6 +36,7 @@
                             $args = ['formid'=>$id,
                                      'type'=>$field['type'],
                                      'orden'=>$i,
+                                     'is_deleted'=>0,
                                      'json'=>json_encode($field)];
                             wp_tbl_insert_or_update($field['id'] , $nc_tbl['formdetails'] , $args);
                             $i++;

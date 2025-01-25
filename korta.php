@@ -34,6 +34,7 @@ if ( ! defined( 'PATH_PLUGIN_PUBLIC_URL' ) )  define( 'PATH_PLUGIN_PUBLIC_URL', 
 include_once PATH_PLUGIN . '/variables.php';
 include_once PATH_PLUGIN . '/includes/functions.php';
 include_once PATH_PLUGIN . '/class/korta.class.php';
+include_once PATH_PLUGIN . '/shortcodes/shortcodes.php';
 
 register_activation_hook(__FILE__, 'korta_install');
 
@@ -58,3 +59,4 @@ function korta(){
 }
 
 $GLOBALS['korta'] = korta();
+

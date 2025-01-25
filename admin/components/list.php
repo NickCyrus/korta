@@ -7,7 +7,8 @@
                    // ['file','bi-upload','Campo carga de archivo'],
                    ['input-text','bi-input-cursor-text','Campo de texto corto'],
                    ['textarea','bi-card-text','Campo de texto largo'],
-                   ['select','bi-justify','Campo tipo selección']
+                   ['select','bi-justify','Campo tipo selección'],
+                   ['accept','bi-check-square','Campo de aceptación']
                     
    ]
 ?>

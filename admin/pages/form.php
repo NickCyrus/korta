@@ -4,7 +4,8 @@
         <?php 
             switch(@$_REQUEST["action"]){
                 default:
-                    get_template_admin('pages/form/list.php');
+                case 'delete':
+                    get_template_admin('pages/form/list.php' , $_REQUEST);
                 break;
                 case 'new':
                     get_template_admin('pages/form/create.php');

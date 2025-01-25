@@ -1,8 +1,12 @@
 <?php
     if (isset($form)){
         $json =  json_decode($form->json);
+       
     }
 ?>
+<div class="korta-loagin">
+        <img src="<?php echo PATH_PLUGIN_URL ?>/korta-logo-loading.svg" />
+ </div>
 <div class="nc-rounded nc-bg-white nc-p-2 nc-my-3 nc-px-4">
     <form action="<?php echo _link('save')?>" method="post" class="nc-form">
      <input type="hidden" id="page" name="page" value="<?php echo $_REQUEST["page"]?>">
@@ -26,10 +30,13 @@
                                         if ($components){
                                                 foreach($components as $component){
                                                     $component->uniqId      = uniqId();
+                                                    $label                  = json_decode($component->json)->label;
+                                                    $listTags[]             = "<code title=\"$label\">[fld_{$component->id}]</code>";
                                                     $component->TypeElement = $component->type;
+                                                    $component->shortcode   = "[fld_{$component->id}]";
                                                     echo '<li>';
                                                         get_template_admin("components/{$component->type}/form.php", (array)$component);
-                                                    echo '<li>';
+                                                    echo '</li>';
                                                 }
                                         }
                                       }
@@ -43,7 +50,9 @@
                     </div>
                     <div class="nc-my-3">
                         <label class="nc-form-label nc-d-block nc-fw-bold">TAGS</label>
-                        <code class="nc-code">[number-request]</code>
+                        <code class="nc-code" title="Numero de solicitud">[number-request]</code>
+                        <?php if (isset($listTags)) echo implode(', ',$listTags)  ?>
+
                     </div>
                     <div class="nc-my-3">
                         <label class="nc-form-label nc-d-block nc-fw-bold">Email automático recepción del formulario (<i>Cliente</i>)</label>

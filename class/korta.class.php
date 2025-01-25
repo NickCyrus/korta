@@ -58,11 +58,11 @@ class korta {
 			
         public function registerCssAndJsFront(){
                 
-                $url_plugins =  PATH_PLUGIN_PUBLIC_URL;
+                $url_plugins =  PATH_PLUGIN_URL;
                 
                 $css = [ 
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css',
-                    
+                        "{$url_plugins}public/css/style.css"
                         ];
 
                 foreach ($css as $item) {
@@ -72,7 +72,9 @@ class korta {
     
                 $js = [
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
-                        $url_plugins.'js/jquery.serializejson.js'
+                        "{$url_plugins}public/js/jquery.serializejson.js",
+                        "{$url_plugins}admin/assets/js/functions.js",
+                        "{$url_plugins}public/js/korta.js"
                       ];
     
                 foreach ($js as $item) {
@@ -87,6 +89,10 @@ class korta {
                                 'action' => 'ajax_korta'
                             )
                  );
+
+                 wp_enqueue_script("jquery");
+
+                // wp_localize_script('jquery', 'cm_settings', $cm_settings);
                
         }
 
@@ -105,8 +111,6 @@ class korta {
 						wp_enqueue_style( $this->slug.str_replace('.','-',basename($item)), $item, '', $ver, 'all'  );
 					}
                     
-                    // $jsHead = ['https://cdn.tailwindcss.com'];
-                    
 					$js = [ 'https://code.jquery.com/ui/1.14.1/jquery-ui.js',
                             'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
                             "{$url_plugins}admin/assets/js/jquery.serializejson.js",
@@ -114,13 +118,7 @@ class korta {
                             "{$url_plugins}admin/assets/js/korta.js",
 							 
 						   ];
-                    /*      
-					foreach ($jsHead as $item) {
-						$ver  = rand();
-						// wp_enqueue_script( $this->slug.str_replace('.','-',basename($item)), $item, 'jQuery', $ver );
-					}
-					*/
-
+                     
 					foreach ($js as $item) {
 						$ver  = rand();
 						wp_enqueue_script( $this->slug.str_replace('.','-',basename($item)), $item, 'jQuery', $ver  , true );

@@ -87,6 +87,15 @@ if (!function_exists('wp_tbl_insert')){
             return $wpdb->insert($table, $args);
         }
 }
+
+if (!function_exists('wp_query')){
+    function wp_query($sql){
+        global $wpdb;
+        return $wpdb->query($sql);
+    }
+}
+
+
 if (!function_exists('wp_tbl_insert_or_update')){
 
         function wp_tbl_insert_or_update($id='' , $table , $args){
@@ -462,7 +471,7 @@ if (!function_exists('get_korta_form')){
 if (!function_exists('get_korta_form_fields')){
     function get_korta_form_fields($form){
         global $nc_tbl;
-        return wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE formid='{$form}' ORDER BY `orden` ");
+        return wp_tbl_select("SELECT * FROM `{$nc_tbl['formdetails']}` WHERE is_deleted=0 AND formid='{$form}' ORDER BY `orden` ");
     }   
 }
 

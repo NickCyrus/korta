@@ -8,12 +8,20 @@ $(document).ready(function(){
          var opc = {
                      opc : 'component',
                      TypeElement :  TypeElement,
+                     beforeSend : function(){
+                        $('.korta-loagin').css('display','flex');
+                     },
                      success: function(rs){
                            if (rs){
                               if (rs.html) $('#form-element-korta #form-element-korta-ul').append('<li>'+rs.html+'</li>');
                               $('#form-element-korta #form-element-korta-ul').sortable();
                            }
-                     }
+
+                           $('.korta-loagin').css('display','none');
+                     },
+                     complete : function(){
+                              
+                     } 
 
                }
 
@@ -36,6 +44,8 @@ $(document).ready(function(){
             $(this).parents('.nc-cards').find('.nc-card-header .caption-name').html($(this).val())
       })
       
+      if ($(".sortable").length) $(".sortable").sortable();
+       
 
       $(document).on('click','#btnEventSave',function(){
 
