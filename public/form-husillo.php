@@ -22,20 +22,20 @@ required<div class="hide" id="table-husillo">
             <tr>
                 <td>Ofertar antes de reparar *</td>
                 <td>
-                    <label><input class="" type="radio" name="Ofertar_antes_de_reparar[]" value="1" required> SI </label>
-                    <label><input class="" type="radio" name="Ofertar_antes_de_reparar[]" value="0" required> NO </label>
+                    <label><input checked type="radio" name="Ofertar_antes_de_reparar[]" value="1" required> SI </label>
+                    <label><input type="radio" name="Ofertar_antes_de_reparar[]" value="0" required> NO </label>
                 </td>
                 <td>Croquizar y ofertar husillo nuevo *</td>
                 <td>
-                    <label><input class="" type="radio" name="Croquizar_y_ofertar_husillo_nuevo[]" value="1" required> SI </label>
-                    <label><input class="" type="radio" name="Croquizar_y_ofertar_husillo_nuevo[]" value="0" required> NO </label>
+                    <label><input checked type="radio" name="Croquizar_y_ofertar_husillo_nuevo[]" value="1" required> SI </label>
+                    <label><input type="radio" name="Croquizar_y_ofertar_husillo_nuevo[]" value="0" required> NO </label>
                 </td>
             </tr>    
             <tr>
                 <td>Achatarrar husillo no reparable *</td>
                 <td>
-                    <label><input class="" type="radio" name="Achatarrar_husillos_no_reparables[]" value="1" required> SI </label>
-                    <label><input class="" type="radio" name="Achatarrar_husillos_no_reparables[]" value="0" required> NO </label>
+                    <label><input checked type="radio" name="Achatarrar_husillos_no_reparables[]" value="1" required> SI </label>
+                    <label><input type="radio" name="Achatarrar_husillos_no_reparables[]" value="0" required> NO </label>
                 </td>
                 <td>Fabricante de la máquina</td>
                 <td>
