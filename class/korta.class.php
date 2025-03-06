@@ -29,7 +29,7 @@ class korta {
                           1
                         );
  
-               add_submenu_page($this->slug, 'Formularios',  'Formularios',  'manage_options', 'kortaForms', [$this, 'Forms']);
+               // add_submenu_page($this->slug, 'Formularios',  'Formularios',  'manage_options', 'kortaForms', [$this, 'Forms']);
                add_submenu_page($this->slug, 'Solicitudes',  'Solicitudes',  'manage_options', 'kortaRequests', [$this, 'Requests']);
                // add_submenu_page($this->slug, 'Editor',  'Editor',  'manage_options', 'editor', [$this, 'editor']);
             
@@ -170,9 +170,9 @@ class korta {
             }
             
             
-            function saveFormRecord($info){+
+            function saveFormRecord($info){
 
-                    
+                    return $info;
 
                     $formId = getInputForm($info['kortaform']);
                     $array_exlude = ['kortaform'];

@@ -1,22 +1,45 @@
 var $= jQuery;
 
 $(document).ready(function(){
+      
+    
+    $(document).on('husillos',function(e){
+         var tableHusillo = $('#box-husillo-container');
+         var nhusillos    = $('.N_de_husillos_enviados').val();
 
-      $(document).on('submit','.korta-form-control',function(e){
 
+         console.log( tableHusillo.find('table').length )
+         console.log( nhusillos )
+
+
+         if (tableHusillo.find('table').length < nhusillos){
+                var dif = nhusillos - tableHusillo.find('table').length;
+                for(i=0;i<dif;i++){
+                    tableHusillo.append($('#table-husillo').html())
+                }
+         }else{
+                $('.N_de_husillos_enviados').val( tableHusillo.find('table').length )
+         }
+
+    })
+
+    $(document).on('change','.N_de_husillos_enviados',function(e){
+        $(document).trigger('husillos');
+    })
+
+    $(document).on('click','.eventClose',function(e){
+        $(this).parents('table').remove();
+        $('.N_de_husillos_enviados').val( $('#box-husillo-container table').length )
+        $(document).trigger('husillos');
+    })
+    
+
+    $(document).on('submit','#korta-form-husillo',function(e){
+     
                 var textBtn = $('.korta-btn').text();
                 e.preventDefault()
                 var error = false;
-                $(this).find('.required-ckeck').each(function(index , item){
-                        var name = $(this).data('control');
-                        var label = $(this).data('label');
-                        if ( !$(name+':checked').length){
-                            alert("Por favor selecione una opción del campo \""+label+"\"");
-                            error = true
-                            return false;
-                        }                          
-                })
-
+                
                 var opc = {
                     opc : 'kortasaveform',
                     data :  $(this).serializeJSON(),
@@ -39,8 +62,9 @@ $(document).ready(function(){
 
 
               if (!error) ajax(opc);
- 
+    
       }) 
-
+       
+      
       
 })

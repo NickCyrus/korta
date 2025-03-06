@@ -4,54 +4,45 @@
     global $nc_tbl;
     global $tables;
 
-    $nc_tbl['form']         =  "{$wpdb->prefix}kortaforms";
-    $nc_tbl['formdetails']  =  "{$wpdb->prefix}kortaformdetails";
-    $nc_tbl['formresponse'] =  "{$wpdb->prefix}kortaformresponses";
-    $nc_tbl['formrecord']   =  "{$wpdb->prefix}kortaformrecords";
+    $nc_tbl['09'] =  "09_Seguimiento_reparaciones";
+    $nc_tbl['10'] =  "10_Informe_reparacion"; 
     
 
-    $tables[] = ["CREATE TABLE `{$nc_tbl['form']}` 
-                (`id` INT NOT NULL AUTO_INCREMENT COMMENT 'Índice' , 
-                 `name` VARCHAR(255) NOT NULL COMMENT 'Nombre' , 
-                 `notification_mail` VARCHAR(255) NULL COMMENT 'Email de notificación' , 
-                 `table_name` VARCHAR(255) NULL COMMENT 'Nombre de la tabla' ,
-                 `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP , 
-                 `is_deleted` INT(1) NULL DEFAULT '0' , 
-                 `notification_receipt` LONGTEXT NULL ,
-                 `json` LONGTEXT NULL , 
-                 PRIMARY KEY (`id`)) ENGINE = InnoDB;"];
+    $tables[] = ["CREATE TABLE `09_Seguimiento_reparaciones` (
+                `ID` int(11) NOT NULL,
+                `Remitente` text NOT NULL,
+                `Persona_de_contacto` text NOT NULL,
+                `Telefono` text NOT NULL,
+                `email` varchar(255) NOT NULL,
+                `N_de_husillos_enviados` int(11) NOT NULL,
+                `Fecha_envio_cliente` datetime NOT NULL,
+                `Fecha_recepcion_korta` datetime NOT NULL,
+                `Referencia_cliente` varchar(255) NOT NULL,
+                `Observaciones` text NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;"];
 
-    $tables[] = ["CREATE TABLE `{$nc_tbl['formdetails']}`
-                 (`id` INT NOT NULL AUTO_INCREMENT , 
-                  `formid` INT NOT NULL ,
-                  `type` VARCHAR(255) NOT NULL , 
-                  `json` LONGTEXT NULL , 
-                  `orden` INT NULL ,
-                  `is_deleted` INT(1) NULL DEFAULT '0' ,
-                   PRIMARY KEY (`id`)) ENGINE = InnoDB;"];
+    $tables[] = ["ALTER TABLE `09_Seguimiento_reparaciones` ADD PRIMARY KEY (`ID`);"];
     
-    $tables[] = ["CREATE TABLE `{$nc_tbl['formresponse']}` 
-                (`id` INT NOT NULL AUTO_INCREMENT , 
-                 `formid` INT NOT NULL , 
-                 `recordid` INT NOT NULL , 
-                 `response` TEXT NULL , 
-                 `json` TEXT NULL , 
-                 `resposedate` DATETIME NULL , 
-                 `is_deleted` INT(1) NULL DEFAULT '0' ,
-                 PRIMARY KEY (`id`)) ENGINE = InnoDB;"];
+    $tables[] = ["ALTER TABLE `09_Seguimiento_reparaciones` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202474;"];
 
-$tables[] = ["CREATE TABLE `{$nc_tbl['formrecord']}`
-            (`id` INT NOT NULL AUTO_INCREMENT , 
-             `code` INT NOT NULL , 
-             `formid` INT NOT NULL , 
-             `recordid` INT NOT NULL , 
-             `user_id` INT NULL , 
-             `is_new` INT(1) NULL DEFAULT '1' , 
-             `is_send` INT(1) NULL DEFAULT '0' , 
-             `created_at` DATE NULL , 
-             `open_at` DATE NULL , 
-             `is_deleted` INT NULL , 
-             PRIMARY KEY (`id`)) ENGINE = InnoDB;"];
+    $tables[] = ["CREATE TABLE `10_Informe_reparacion` (
+                    `ID` int(11) NOT NULL,
+                    `ID_formulario` int(11) NOT NULL,
+                    `Referencia_cliente_husillo` varchar(255) NOT NULL,
+                    `Problema_detectado` varchar(255) NOT NULL,
+                    `Urgencia` varchar(255) NOT NULL,
+                    `Ofertar_antes_de_reparar` tinyint(1) NOT NULL,
+                    `Croquizar_y_ofertar_husillo_nuevo` tinyint(1) NOT NULL,
+                    `Achatarrar_husillos_no_reparables` tinyint(1) NOT NULL,
+                    `Fabricante_de_la_maquina` varchar(255) NOT NULL,
+                    `Modelo_de_maquina` varchar(255) NOT NULL,
+                    `Eje` varchar(255) NOT NULL,
+                    `Observaciones` varchar(255) NOT NULL
+                    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;"];
+
+    $tables[] = ["ALTER TABLE `10_Informe_reparacion` ADD PRIMARY KEY (`ID`);"];
+    
+    $tables[] = ["ALTER TABLE `10_Informe_reparacion` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;"];
 
 
 
