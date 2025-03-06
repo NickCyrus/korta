@@ -171,7 +171,42 @@ class korta {
             
             
             function saveFormRecord($info){
+                    global $nc_tbl;
 
+                    extract($info);
+
+                    $record = ['Remitente'=>$Remitente,
+                               'Persona_de_contacto'=>$Persona_de_contacto,
+                               'Referencia_cliente'=>$Referencia_cliente,
+                               'Telefono'=>$Telefono,
+                               'N_de_husillos_enviados'=>$N_de_husillos_enviados,
+                               'email'=>$email, 
+                               'Fecha_envio_cliente'=>$Fecha_envio_cliente,
+                               'Observaciones'=>$Observaciones, 
+                               ];
+                    
+                   
+                    $recordId =  wp_tbl_insert($nc_tbl['09'], $record);
+                    
+                   
+                    foreach($Referencia_cliente_husillo as $key=>$row){
+
+                                $child = ['Referencia_cliente_husillo'=>$Referencia_cliente_husillo[$key],
+                                          'Problema_detectado'=>$Problema_detectado[$key],
+                                          'Urgencia'=>$Urgencia[$key],
+                                          'Ofertar_antes_de_reparar'=>$Ofertar_antes_de_reparar[$key],
+                                          'Croquizar_y_ofertar_husillo_nuevo'=>$Croquizar_y_ofertar_husillo_nuevo[$key],
+                                          'Achatarrar_husillos_no_reparables'=>$Achatarrar_husillos_no_reparables[$key],
+                                          'Fabricante_de_la_maquina'=>$Fabricante_de_la_maquina[$key],
+                                          'Modelo_de_maquina'=>$Modelo_de_maquina[$key],
+                                          'ID_formulario'=> $recordId
+                                        ];
+                                pre($child);
+
+                                wp_tbl_insert($nc_tbl['10'] , $child);
+                                $key++;              
+                    }           
+                    
                     return $info;
 
                     $formId = getInputForm($info['kortaform']);

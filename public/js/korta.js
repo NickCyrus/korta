@@ -50,7 +50,8 @@ $(document).ready(function(){
                         if (rs){
                             if (rs.error) alert(rs.message)
                             if (rs.success) alert(rs.message)
-                           resetForm('.korta-form-control');    
+                            // resetForm('.korta-form-control');    
+                            // $('#box-husillo-container').html('')
                         }
                         $('.korta-btn').text(textBtn).attr('disabled',false);
                     },
